@@ -1,0 +1,662 @@
+<!-- <!DOCTYPE html>: Declaração fundamental que instrui o navegador a processar o arquivo usando os padrões da especificação HTML5 -->
+<!DOCTYPE html>
+
+<!-- <html>: Elemento raiz que encapsula toda a árvore do documento; o atributo 'lang="pt-BR"' declara o idioma da página para navegadores e ferramentas de acessibilidade -->
+<html lang="pt-BR">
+
+<!-- <head>: Seção de metadados técnicos, configurações de renderização e importação de folhas de estilo e fontes (elementos não renderizados diretamente na tela) -->
+<head>
+  <!-- <meta charset="utf-8">: Define a codificação universal de caracteres UTF-8, garantindo a exibição de acentos, cedilhas e símbolos sem corrupção -->
+  <meta charset="utf-8">
+
+  <!-- <meta name="viewport"...>: Configuração de responsividade; define que a largura da tela deve seguir o tamanho físico do dispositivo com escala inicial de 100% -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- <title>: Define o título da página exibido na aba do navegador, no histórico e nos mecanismos de busca -->
+  <title>Blog - Versão Estática</title>
+
+  <!-- <link>: Conecta a página aos servidores do Google Fonts para carregar as fontes tipográficas 'Poppins' e 'Roboto' -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- <link>: Importa a folha de estilos CSS minificada do Bootstrap 5 via CDN, fornecendo o sistema de grid e componentes pré-estilizados -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- <link>: Importa a biblioteca Bootstrap Icons para viabilizar a exibição de ícones vetoriais inline -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- <style>: Bloco interno reservado para regras de estilização personalizadas em CSS -->
+  <style>
+    /* :root: Pseudo-classe que seleciona o elemento raiz (html) para registrar variáveis CSS globais reutilizáveis */
+    :root {
+      /* --cor-destaque: Variável que armazena a cor hexadecimal laranja utilizada em elementos interativos e de destaque */
+      --cor-destaque: #f75815;
+      /* --cor-titulo: Variável que define o tom azul-petróleo escuro utilizado nas tipografias de cabeçalho */
+      --cor-titulo: #2d465e;
+      /* --cor-fundo: Variável que define a cor de fundo cinza-clara de toda a interface */
+      --cor-fundo: #f9fbfd;
+    }
+
+    /* body: Seletor de elemento que aplica regras globais ao corpo de todo o documento */
+    body {
+      /* font-family: Define a família tipográfica principal como Roboto, com fallback para qualquer fonte sans-serif nativa */
+      font-family: 'Roboto', sans-serif;
+      /* background-color: Aplica a cor de fundo definida na variável global --cor-fundo */
+      background-color: var(--cor-fundo);
+      /* color: Estabelece a cor cinza-escura padrão (#444444) para os textos corridos, evitando o contraste excessivo do preto puro */
+      color: #444444;
+    }
+
+    /* h1, h2, h3, h4: Seletor de grupo que unifica a aparência de todos os níveis de títulos do site */
+    h1, h2, h3, h4 {
+      /* font-family: Aplica a tipografia Poppins especificamente aos títulos para reforçar a identidade visual */
+      font-family: 'Poppins', sans-serif;
+      /* color: Atribui a tonalidade escura armazenada na variável --cor-titulo aos títulos */
+      color: var(--cor-titulo);
+    }
+
+    /* .logo-site: Classe que estiliza o logotipo de texto no topo do cabeçalho */
+    .logo-site {
+      /* font-size: Define o tamanho da fonte em 1.8 vezes o tamanho base da raiz (cerca de 28.8px) */
+      font-size: 1.8rem;
+      /* font-weight: Aplica o peso de fonte negrito com valor 700 */
+      font-weight: 700;
+      /* color: Garante que a marca utilize a cor azul da variável --cor-titulo */
+      color: var(--cor-titulo);
+      /* text-decoration: none: Remove o sublinhado padrão que os navegadores aplicam automaticamente a tags <a> */
+      text-decoration: none;
+    }
+
+    /* .logo-site span: Seletor descendente que estiliza exclusivamente o ponto final inserido dentro do logotipo */
+    .logo-site span {
+      /* color: Altera a cor do ponto final para a cor laranja de destaque */
+      color: var(--cor-destaque);
+    }
+
+    /* .botao-menu: Classe de estilização dos links de filtro de categoria */
+    .botao-menu {
+      /* color: Aplica a cor de texto padrão de títulos aos botões */
+      color: var(--cor-titulo);
+      /* text-decoration: none: Remove o sublinhado nativo de link */
+      text-decoration: none;
+      /* padding: Adiciona espaçamento interno de 6px nas partes superior/inferior e 16px nas laterais */
+      padding: 6px 16px;
+      /* border-radius: 20px: Arredonda os cantos da caixa, gerando o formato anatômico de pílula */
+      border-radius: 20px;
+      /* font-weight: Define espessura média (semi-bold) para melhorar a leitura */
+      font-weight: 500;
+      /* transition: Aplica transição gradual de 0.2 segundos em qualquer alteração visual (como hover) */
+      transition: 0.2s;
+    }
+
+    /* .botao-menu:hover, .botao-menu.ativo: Regra conjunta para o botão selecionado ou quando o cursor passa por cima */
+    .botao-menu:hover,
+    .botao-menu.ativo {
+      /* background-color: Preenche o fundo do botão com a cor laranja de destaque */
+      background-color: var(--cor-destaque);
+      /* color: Altera a cor do texto para branco visando contraste legível */
+      color: #ffffff;
+    }
+
+    /* .cartao-artigo: Classe que delimita a caixa estrutural de cada artigo publicado */
+    .cartao-artigo {
+      /* background: Preenche o fundo do cartão com a cor branca sólida */
+      background: #ffffff;
+      /* border: Insere contorno estrutural fino de 1px cinza-claro */
+      border: 1px solid #e6e9ec;
+      /* border-radius: Arredonda as quatro pontas do cartão em 12 pixels */
+      border-radius: 12px;
+      /* overflow: hidden: Impede que a imagem do topo vaze por fora das pontas arredondadas */
+      overflow: hidden;
+      /* height: 100%: Força o cartão a esticar por toda a altura disponível da coluna, nivelando os cards da mesma linha */
+      height: 100%;
+      /* transition: Suaviza a animação de deslocamento e da projeção de sombra em 0.2 segundos */
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* .cartao-artigo:hover: Disparado dinamicamente quando o mouse é posicionado sobre a superfície do cartão */
+    .cartao-artigo:hover {
+      /* transform: translateY(-4px): Desloca o elemento 4 pixels para cima no eixo Y sem alterar a posição de elementos vizinhos */
+      transform: translateY(-4px);
+      /* box-shadow: Projeta sombra suave para baixo (0px horizontal, 8px vertical, 20px de dispersão/desfoque com 8% de opacidade preta) */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* .cartao-artigo img: Seletor específico para as fotografias contidas no interior do cartão */
+    .cartao-artigo img {
+      /* width: 100%: Força a imagem a preencher toda a largura horizontal disponível no cartão */
+      width: 100%;
+      /* height: 200px: Fixa a altura de todas as fotografias em exatamente 200px */
+      height: 200px;
+      /* object-fit: cover: Redimensiona e recorta a imagem proporcionalmente dentro da moldura sem deformar sua escala */
+      object-fit: cover;
+    }
+
+    /* .etiqueta-categoria: Estilização do crachá indicativo da categoria do artigo */
+    .etiqueta-categoria {
+      /* background-color: Cor laranja com 12% de opacidade (rgba), criando um tom pastel suave de fundo */
+      background-color: rgba(247, 88, 21, 0.12);
+      /* color: Cor do texto no mesmo tom laranja principal */
+      color: var(--cor-destaque);
+      /* font-size: Diminui a tipografia da etiqueta para 0.78rem (cerca de 12.5px) */
+      font-size: 0.78rem;
+      /* font-weight: Aplica espessura negrito com valor 600 */
+      font-weight: 600;
+      /* padding: Espaçamento interno de 4px na vertical e 10px na horizontal */
+      padding: 4px 10px;
+      /* border-radius: 20px: Arredonda totalmente as bordas do crachá */
+      border-radius: 20px;
+      /* text-transform: uppercase: Converte automaticamente as letras da categoria em maiúsculas */
+      text-transform: uppercase;
+    }
+
+    /* .btn-laranja: Botão de ação temática primária da interface */
+    .btn-laranja {
+      /* background-color: Fundo laranja vibrante da variável --cor-destaque */
+      background-color: var(--cor-destaque);
+      /* color: Tipografia interna em branco */
+      color: #ffffff;
+      /* border: none: Remove a borda padrão cinza que os navegadores colocam na tag <button> */
+      border: none;
+    }
+
+    /* .btn-laranja:hover: Altera o estado do botão ao receber o cursor */
+    .btn-laranja:hover {
+      /* background-color: Escurece o laranja para o tom #d8470a, fornecendo feedback visual de clique */
+      background-color: #d8470a;
+      /* color: Mantém a cor do texto branca no hover */
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<!-- <body>: Estrutura principal que agrupa todos os elementos visíveis na janela do usuário -->
+<body>
+
+  <!-- 
+    <header>: Seção semântica de cabeçalho da página.
+    - 'bg-white': Classe do Bootstrap que define cor de fundo branca (#ffffff).
+    - 'border-bottom': Adiciona borda de 1px cinza na parte inferior do cabeçalho.
+    - 'shadow-sm': Aplica sombra projetada suave de baixa intensidade na base do cabeçalho.
+  -->
+  <header class="bg-white border-bottom shadow-sm">
+
+    <!-- 
+      <div>: Bloco de alinhamento e centralização do conteúdo superior.
+      - 'container': Limita a largura do conteúdo central e adiciona margens laterais responsivas.
+      - 'py-3': Padding vertical (topo e base) de tamanho 3 (1rem = 16px).
+      - 'd-flex': Ativa o modelo de caixa Flexbox nos elementos filhos diretos.
+      - 'flex-wrap': Permite a quebra dos elementos em múltiplas linhas em telas de celular.
+      - 'justify-content-between': Distribui os itens enviando o logotipo para a esquerda e a busca para a direita.
+      - 'align-items-center': Alinha verticalmente os elementos pelo centro da linha.
+      - 'gap-3': Estabelece espaçamento de 1rem (16px) entre os elementos para evitar colisão visual.
+    -->
+    <div class="container py-3 d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+      <!-- <a>: Tag de hiperlink utilizada para abrigar a marca e direcionar o clique para a página inicial -->
+      <a href="#" class="logo-site">
+        BlogPy
+        <!-- <span>: Elemento em linha neutro empregado para isolar e colorir apenas o ponto final -->
+        <span>.</span>
+      </a>
+
+      <!-- 
+        <form>: Elemento de formulário com bloqueio de submissão via JavaScript puro (onsubmit).
+        - 'd-flex': Aplica Flexbox para esticar a barra de busca horizontalmente.
+      -->
+      <form class="d-flex" onsubmit="event.preventDefault();">
+
+        <!-- 
+          <div>: Agrupador de campos do Bootstrap.
+          - 'input-group': Conecta visualmente o campo de texto e o botão em uma unidade única sem vãos.
+        -->
+        <div class="input-group">
+
+          <!-- 
+            <input>: Campo interativo para inserção de texto.
+            - 'type="text"': Define que o campo aceita strings e caracteres comuns.
+            - 'class="form-control"': Estilização padrão do Bootstrap com preenchimento interno, cantos arredondados e contorno em foco.
+            - 'placeholder': Texto de instrução que some quando o usuário começa a digitar.
+          -->
+          <input type="text" class="form-control" placeholder="Pesquisar artigo...">
+
+          <!-- 
+            <button>: Botão clicável de acionamento do formulário.
+            - 'type="submit"': Especifica a função de submissão de busca.
+            - 'btn': Classe base do Bootstrap que define padding, cursor tipo ponteiro e alinhamentos padrão de botão.
+            - 'btn-laranja': Classe customizada criada no bloco <style> com a paleta do projeto.
+          -->
+          <button type="submit" class="btn btn-laranja">
+            <!-- 
+              <i>: Elemento utilizado para renderizar ícones vetoriais.
+              - 'bi': Classe base que carrega a fonte vetorial do Bootstrap Icons.
+              - 'bi-search': Aplica o desenho vetorial específico da lupa de pesquisa.
+            -->
+            <i class="bi bi-search"></i>
+          </button>
+
+        </div>
+      </form>
+
+    </div>
+
+    <!-- 
+      <nav>: Bloco semântico destinado ao menu de navegação e filtros.
+      - 'bg-light': Aplica cor de fundo cinza muito clara (#f8f9fa).
+      - 'border-top': Insere linha divisória de 1px na parte superior.
+      - 'py-2': Adiciona espaçamento interno vertical de tamanho 2 (0.5rem = 8px).
+    -->
+    <nav class="bg-light border-top py-2">
+
+      <!-- 
+        <div>: Contêiner de centralização dos botões do menu.
+        - 'container': Limita a largura máxima da barra.
+        - 'd-flex': Aplica layout flexível nos botões.
+        - 'flex-wrap': Permite aos botões quebrarem para a linha seguinte em telas estreitas.
+        - 'justify-content-center': Centraliza todos os botões de navegação horizontalmente na tela.
+        - 'gap-2': Aplica espaçamento horizontal de 8px entre cada botão.
+      -->
+      <div class="container d-flex flex-wrap justify-content-center gap-2">
+
+        <!-- <a>: Link estilizado com a classe customizada .botao-menu e com .ativo indicando o filtro selecionado -->
+        <a href="#" class="botao-menu ativo">Todas</a>
+
+        <!-- <a>: Link de filtro temático de Python -->
+        <a href="#" class="botao-menu">Python</a>
+
+        <!-- <a>: Link de filtro temático de Web Design -->
+        <a href="#" class="botao-menu">Web Design</a>
+
+        <!-- <a>: Link de filtro temático de Segurança -->
+        <a href="#" class="botao-menu">Segurança</a>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- 
+    <main>: Demarca a área de conteúdo central, exclusiva e principal da página.
+    - 'container': Mantém a largura padronizada alinhada ao cabeçalho.
+    - 'my-5': Margem vertical externa de nível 5 (3rem = 48px) acima e abaixo do conteúdo central.
+  -->
+  <main class="container my-5">
+
+    <!-- 
+      <section>: Seção estrutural autônoma dedicada à exibição da listagem de postagens.
+      - 'mb-5': Margem inferior de 3rem (48px) para separar a grade de artigos do mural de comentários.
+    -->
+    <section class="mb-5">
+
+      <!-- 
+        <h2>: Título de nível hierárquico 2 que rotula a seção de artigos.
+        - 'h4': Classe tipográfica do Bootstrap que ajusta o tamanho da fonte para a escala de um H4 (1.5rem = 24px).
+        - 'fw-bold': Força peso de fonte negrito com font-weight 700.
+        - 'mb-4': Margem inferior de nível 4 (1.5rem = 24px) para afastar o título dos cartões.
+      -->
+      <h2 class="h4 fw-bold mb-4">Artigos Recentes</h2>
+
+      <!-- 
+        <div>: Linha principal do sistema de grid do Bootstrap.
+        - 'row': Ativa a estrutura horizontal de colunas com margens negativas para alinhamento.
+        - 'g-4': Aplica espaçamento uniforme de nível 4 (gutter = 24px) tanto entre colunas quanto entre linhas.
+      -->
+      <div class="row g-4">
+        
+        <!-- 
+          <div>: Elemento de coluna responsiva do Bootstrap.
+          - 'col-md-4': Em telas de tamanho médio em diante (>= 768px), ocupa 4 das 12 colunas da grade (12 / 4 = 3 cartões por linha). Em smartphones (< 768px), ocupa 100% da largura.
+        -->
+        <div class="col-md-4">
+
+          <!-- 
+            <article>: Tag semântica para encapsular uma publicação completa, independente e autoexplicativa.
+            - 'cartao-artigo': Classe personalizada com borda, cantos arredondados e transição suave.
+            - 'd-flex': Ativa o Flexbox no cartão.
+            - 'flex-column': Organiza os elementos filhos em formato de pilha vertical (imagem no topo, textos abaixo).
+          -->
+          <article class="cartao-artigo d-flex flex-column">
+
+            <!-- 
+              <img>: Elemento de inserção de imagem fotográfica.
+              - 'src': Caminho absoluto da imagem hospedada externamente.
+              - 'alt': Texto alternativo exibido caso a imagem falhe e interpretado por softwares leitores de tela.
+            -->
+            <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=600&q=80" alt="Python">
+
+            <!-- 
+              <div>: Caixa estrutural que recebe o corpo textual do artigo.
+              - 'p-4': Padding interno em todos os quatro lados de 1.5rem (24px).
+              - 'd-flex': Ativa Flexbox interno.
+              - 'flex-column': Distribui título, resumo e rodapé verticalmente.
+              - 'flex-grow-1': Faz este contêiner expandir para preencher toda a altura disponível da coluna.
+            -->
+            <div class="p-4 d-flex flex-column flex-grow-1">
+
+              <!-- 
+                <div>: Espaçador do crachá.
+                - 'mb-2': Margem inferior de 0.5rem (8px).
+              -->
+              <div class="mb-2">
+                <!-- <span>: Crachá estilizado com a classe personalizada .etiqueta-categoria -->
+                <span class="etiqueta-categoria">Python</span>
+              </div>
+
+              <!-- 
+                <h3>: Título de nível 3 para o artigo.
+                - 'h5': Reduz a escala visual da tipografia para a escala de um H5 (1.25rem = 20px).
+                - 'fw-bold': Aplica espessura negrito.
+              -->
+              <h3 class="h5 fw-bold">Primeiros Passos na Lógica com Python</h3>
+
+              <!-- 
+                <p>: Parágrafo de descrição resumida da publicação.
+                - 'text-muted': Aplica cor cinza atenuada para diferenciar do título.
+                - 'small': Reduz o tamanho da fonte para 87.5% da base (aproximadamente 14px).
+                - 'flex-grow-1': Expande a altura do texto do resumo para empurrar o rodapé (autor/data) sempre até o final do cartão.
+              -->
+              <p class="text-muted small flex-grow-1">Entenda como variáveis, listas e funções transformam ideias em programas reais.</p>
+
+              <!-- 
+                <div>: Barra de rodapé do cartão.
+                - 'border-top': Linha divisória fina superior separando o resumo dos metadados.
+                - 'pt-3': Padding superior de 1rem (16px) afastando os dados da borda.
+                - 'mt-2': Margem superior de 0.5rem (8px).
+                - 'd-flex': Ativa o alinhamento flexível.
+                - 'justify-content-between': Empurra o autor para a borda esquerda e a data para a borda direita.
+                - 'small': Aplica tipografia reduzida para ambos os dados.
+                - 'text-muted': Aplica a cor cinza suave.
+              -->
+              <div class="border-top pt-3 mt-2 d-flex justify-content-between small text-muted">
+                <!-- <span>: Agrupa o ícone e o nome do autor em linha -->
+                <span>
+                  <!-- 
+                    <i>: Renderiza o ícone de usuário.
+                    - 'bi': Classe base da biblioteca Bootstrap Icons.
+                    - 'bi-person': Desenho vetorial da silhueta de uma pessoa.
+                    - 'me-1': Margin-End 1 (adiciona 4px de margem à direita para afastar o ícone da palavra seguinte).
+                  -->
+                  <i class="bi bi-person me-1"></i>Prof. de Tecnologia
+                </span>
+
+                <!-- <span>: Agrupa o ícone de calendário e a data em linha -->
+                <span>
+                  <!-- 
+                    <i>: Renderiza o ícone de data.
+                    - 'bi': Classe base da biblioteca Bootstrap Icons.
+                    - 'bi-calendar3': Desenho vetorial de folha de calendário estilo 3.
+                    - 'me-1': Margin-End 1 (adiciona 4px de margem à direita do ícone).
+                  -->
+                  <i class="bi bi-calendar3 me-1"></i>10 Mai 2026
+                </span>
+              </div>
+
+            </div>
+          </article>
+        </div>
+
+        <!-- <div>: Segunda coluna responsiva ocupando 4 partes de 12 no grid desktop -->
+        <div class="col-md-4">
+
+          <!-- <article>: Segundo artigo da publicação com propriedades estruturais e transição -->
+          <article class="cartao-artigo d-flex flex-column">
+
+            <!-- <img>: Imagem destacada de capa sobre desenvolvimento responsivo -->
+            <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80" alt="Web Design">
+
+            <!-- <div>: Contêiner vertical com padding de 24px para o conteúdo textual -->
+            <div class="p-4 d-flex flex-column flex-grow-1">
+
+              <!-- <div>: Caixa com margem inferior para alocar a etiqueta de assunto -->
+              <div class="mb-2">
+                <!-- <span>: Etiqueta visual indicando categoria de Web Design -->
+                <span class="etiqueta-categoria">Web Design</span>
+              </div>
+
+              <!-- <h3>: Título da publicação sobre Bootstrap -->
+              <h3 class="h5 fw-bold">Criando Sites Responsivos com Bootstrap 5</h3>
+
+              <!-- <p>: Resumo explicativo do artigo que empurra o rodapé via flex-grow-1 -->
+              <p class="text-muted small flex-grow-1">Veja como o sistema de 12 colunas adapta a tela para celulares e computadores.</p>
+
+              <!-- <div>: Rodapé com linha divisória contendo autor e data -->
+              <div class="border-top pt-3 mt-2 d-flex justify-content-between small text-muted">
+                <!-- <span>: Agrupa ícone de perfil e nome da autora Ana Silva -->
+                <span>
+                  <!-- <i>: Ícone de pessoa com margem de 4px à direita -->
+                  <i class="bi bi-person me-1"></i>Ana Silva
+                </span>
+
+                <!-- <span>: Agrupa ícone de calendário e data de publicação -->
+                <span>
+                  <!-- <i>: Ícone de calendário com margem de 4px à direita -->
+                  <i class="bi bi-calendar3 me-1"></i>12 Mai 2026
+                </span>
+              </div>
+
+            </div>
+          </article>
+        </div>
+
+        <!-- <div>: Terceira coluna da linha para exibição do último artigo -->
+        <div class="col-md-4">
+
+          <!-- <article>: Terceiro artigo com estilização de card e elevação no hover -->
+          <article class="cartao-artigo d-flex flex-column">
+
+            <!-- <img>: Imagem fotográfica representando ambiente de código e programação -->
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80" alt="Tecnologia">
+
+            <!-- <div>: Área interna textual flexível estendida -->
+            <div class="p-4 d-flex flex-column flex-grow-1">
+
+              <!-- <div>: Margem inferior da etiqueta -->
+              <div class="mb-2">
+                <!-- <span>: Etiqueta visual da categoria Segurança -->
+                <span class="etiqueta-categoria">Segurança</span>
+              </div>
+
+              <!-- <h3>: Título do terceiro post -->
+              <h3 class="h5 fw-bold">A Diferença Entre HTML, CSS e Programação</h3>
+
+              <!-- <p>: Síntese conceitual do artigo esticada com flex-grow-1 -->
+              <p class="text-muted small flex-grow-1">Aprenda na prática o papel da estrutura, do estilo visual e da lógica no servidor.</p>
+
+              <!-- <div>: Rodapé inferior com linha divisória de separação -->
+              <div class="border-top pt-3 mt-2 d-flex justify-content-between small text-muted">
+                <!-- <span>: Identificação do autor Carlos Mendes com ícone associado -->
+                <span>
+                  <!-- <i>: Ícone de usuário com 4px de espaçamento à direita -->
+                  <i class="bi bi-person me-1"></i>Carlos Mendes
+                </span>
+
+                <!-- <span>: Data de lançamento da publicação com ícone de calendário -->
+                <span>
+                  <!-- <i>: Ícone de calendário com 4px de espaçamento à direita -->
+                  <i class="bi bi-calendar3 me-1"></i>15 Mai 2026
+                </span>
+              </div>
+
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 
+      <section>: Seção semântica que comporta o mural de mensagens e o formulário de feedback.
+      - 'bg-white': Cor de fundo branca.
+      - 'p-4': Espaçamento interno acolchoado de 24px.
+      - 'rounded-4': Arredondamento amplo dos quatro cantos com raio de 1rem (16px).
+      - 'border': Contorno fino cinza ao redor de todo o bloco.
+      - 'shadow-sm': Sombra suave na parte inferior da caixa.
+    -->
+    <section class="bg-white p-4 rounded-4 border shadow-sm">
+
+      <!-- 
+        <div>: Linha do grid dividindo o espaço em duas metades.
+        - 'row': Ativa a estrutura horizontal de colunas.
+        - 'g-4': Espaçamento de 24px entre as colunas da esquerda e da direita.
+      -->
+      <div class="row g-4">
+
+        <!-- 
+          <div>: Coluna esquerda destinada à leitura de comentários.
+          - 'col-md-6': Ocupa 6 das 12 colunas da linha em computadores (50% da largura total).
+        -->
+        <div class="col-md-6">
+
+          <!-- 
+            <h3>: Título do mural de mensagens.
+            - 'h5': Escala tipográfica com tamanho equivalente a um H5 (1.25rem = 20px).
+            - 'fw-bold': Tipografia com peso negrito 700.
+            - 'mb-3': Margem inferior de nível 3 (1rem = 16px).
+          -->
+          <h3 class="h5 fw-bold mb-3">
+            <!-- 
+              <i>: Ícone de conversa em balões.
+              - 'bi': Classe base da biblioteca Bootstrap Icons.
+              - 'bi-chat-dots': Desenho vetorial de balão de fala com pontos de reticências.
+              - 'me-1': Margem à direita de 4px.
+            -->
+            <i class="bi bi-chat-dots me-1"></i> Mural de Comentários
+          </h3>
+
+          <!-- 
+            <div>: Cartão de exibição de um comentário já postado.
+            - 'p-3': Espaçamento interno de 1rem (16px).
+            - 'mb-2': Margem inferior de 0.5rem (8px).
+            - 'bg-light': Fundo cinza bem claro para contrastar com o fundo branco da seção.
+            - 'border': Contorno fino de 1px ao redor da mensagem.
+            - 'rounded-3': Cantos arredondados na escala de tamanho 3 (cerca de 6px).
+          -->
+          <div class="p-3 mb-2 bg-light border rounded-3">
+            <!-- 
+              <strong>: Elemento semântico de forte ênfase para exibir o nome do autor em negrito.
+              - 'd-block': Transforma o elemento em bloco para forçar a mensagem a quebrar para a linha seguinte.
+              - 'text-dark': Força a cor do nome em preto para destacar do restante do texto.
+            -->
+            <strong class="d-block text-dark">Maria Souza</strong>
+
+            <!-- 
+              <span>: Tag de texto em linha para acomodar a mensagem deixada pelo usuário.
+              - 'text-secondary': Aplica tonalidade cinza intermediária.
+              - 'small': Aplica tipografia reduzida para harmonização do cartão.
+            -->
+            <span class="text-secondary small">Muito fácil de entender a separação entre o HTML e o Python!</span>
+          </div>
+
+        </div>
+
+        <!-- 
+          <div>: Coluna direita onde se localiza o formulário de envio.
+          - 'col-md-6': Ocupa as 6 colunas restantes (50% do espaço horizontal) em computadores.
+        -->
+        <div class="col-md-6">
+
+          <!-- <h3>: Título convidativo para a caixa de envio de mensagens -->
+          <h3 class="h5 fw-bold mb-3">Deixe seu Comentário</h3>
+
+          <!-- 
+            <form>: Estrutura interativa com interceptador JavaScript no evento 'onsubmit' para simular a postagem com alert.
+          -->
+          <form onsubmit="event.preventDefault(); alert('Comentário enviado com sucesso (simulação visual)!');">
+
+            <!-- 
+              <div>: Caixa de isolamento do primeiro campo do formulário.
+              - 'mb-3': Margem inferior de 1rem (16px) separando do campo seguinte.
+            -->
+            <div class="mb-3">
+              <!-- 
+                <label>: Rótulo textual vinculado ao campo de nome.
+                - 'form-label': Classe utilitária do Bootstrap que aplica margem inferior de 0.5rem ao rótulo.
+                - 'small': Reduz o tamanho tipográfico.
+                - 'fw-bold': Exibe o rótulo em negrito.
+              -->
+              <label class="form-label small fw-bold">Seu Nome:</label>
+
+              <!-- 
+                <input>: Caixa de entrada de texto de linha única.
+                - 'type="text"': Campo textual padrão.
+                - 'class="form-control"': Classe padrão do Bootstrap para inputs fluidos com bordas arredondadas e efeito de foco.
+                - 'placeholder': Texto de orientação interno.
+                - 'required': Atributo do HTML5 que impede o envio caso o campo esteja em branco.
+              -->
+              <input type="text" class="form-control" placeholder="Ex: João Pedro" required>
+            </div>
+
+            <!-- 
+              <div>: Caixa de isolamento do campo de texto de múltiplas linhas.
+              - 'mb-3': Margem inferior de 1rem (16px) separando do botão de envio.
+            -->
+            <div class="mb-3">
+              <!-- <label>: Rótulo descritivo do campo da mensagem -->
+              <label class="form-label small fw-bold">Sua Mensagem:</label>
+
+              <!-- 
+                <textarea>: Caixa interativa de entrada de texto longo com múltiplas linhas.
+                - 'rows="2"': Altura inicial configurada para exibir 2 linhas visíveis.
+                - 'class="form-control"': Formatação e dimensionamento padrão do Bootstrap.
+                - 'placeholder': Instrução ao usuário.
+                - 'required': Torna obrigatório o preenchimento da mensagem antes de enviar.
+              -->
+              <textarea rows="2" class="form-control" placeholder="Escreva seu comentário..." required></textarea>
+            </div>
+
+            <!-- 
+              <button>: Botão de envio dos dados preenchidos.
+              - 'type="submit"': Dispara o evento de submissão do formulário.
+              - 'btn': Classe base do Bootstrap para botões com padding e alinhamentos.
+              - 'btn-laranja': Classe customizada com a cor do tema.
+              - 'w-100': Define a largura do botão em 100% da coluna, esticando-o de ponta a ponta.
+            -->
+            <button type="submit" class="btn btn-laranja w-100">
+              <!-- 
+                <i>: Ícone decorativo de envio.
+                - 'bi': Classe base da biblioteca Bootstrap Icons.
+                - 'bi-send': Desenho vetorial de avião de papel indicando ação de envio.
+                - 'me-1': Margem à direita de 4px para não colar no texto.
+              -->
+              <i class="bi bi-send me-1"></i> Publicar Comentário
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 
+    <footer>: Seção de rodapé semântico posicionada no encerramento da página.
+    - 'bg-white': Cor de fundo branca sólida.
+    - 'border-top': Linha divisória de 1px cinza separando o rodapé do conteúdo principal.
+    - 'py-4': Espaçamento interno vertical acolchoado de nível 4 (1.5rem = 24px).
+    - 'mt-5': Margem externa superior de nível 5 (3rem = 48px) empurrando o rodapé para baixo.
+    - 'text-center': Centraliza o alinhamento de todos os textos horizontais.
+    - 'small': Aplica tipografia reduzida aos créditos.
+    - 'text-muted': Aplica cor cinza atenuada aos textos.
+  -->
+  <footer class="bg-white border-top py-4 mt-5 text-center small text-muted">
+
+    <!-- 
+      <div>: Contêiner de largura responsiva para centralizar o parágrafo de encerramento.
+      - 'container': Limita a largura do conteúdo.
+    -->
+    <div class="container">
+
+      <!-- 
+        <p>: Parágrafo de texto com os créditos finais do projeto.
+        - 'mb-0': Remove totalmente a margem inferior padrão aplicada a parágrafos no Bootstrap.
+      -->
+      <p class="mb-0">
+        <!-- <strong>: Aplica ênfase em negrito ao nome da aplicação -->
+        <strong>BlogPy</strong> — Versão Estática (HTML5 + CSS3 + Bootstrap 5).
+      </p>
+
+    </div>
+  </footer>
+
+</body>
+</html>
