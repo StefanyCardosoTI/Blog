@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<!-- Informa ao navegador que este arquivo usa HTML5 e está em Português -->
+<html lang="pt-BR">
+
+<head>
+  <!-- Garante que acentos e cedilha (ç) funcionem corretamente -->
+  <meta charset="utf-8">
+
+  <!-- Meta tag de Responsividade: faz o site se ajustar ao tamanho da tela do celular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BlogPy - Projeto Didático de Programação Web</title>
+
+  <!-- 1. GOOGLE FONTS: Carrega as fontes 'Poppins' (títulos) e 'Roboto' (textos) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- 2. BOOTSTRAP 5.3 CSS: Traz o sistema de colunas responsivas e estilos prontos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- 3. BOOTSTRAP ICONS: Biblioteca para exibir ícones (lupa, usuário, calendário) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- 4. ESTILOS CSS3 PRÓPRIOS: Personaliza as cores inspiradas no template Blogy -->
+  <style>
+    /* Variáveis de cores: mudando aqui, você altera a cor do site inteiro na aula! */
+    :root {
+      --cor-destaque: #f75815;   /* Laranja principal */
+      --cor-titulo: #2d465e;     /* Azul escuro */
+      --cor-fundo: #f9fbfd;      /* Cinza bem claro */
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--cor-fundo);
+      color: #444444;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+      color: var(--cor-titulo);
+    }
+
+    /* Estilo da marca/logotipo no topo */
+    .logo-site {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--cor-titulo);
+      text-decoration: none;
+    }
+
+    .logo-site span {
+      color: var(--cor-destaque);
+    }
+
+    /* Estilo dos botões de categoria no menu */
+    .botao-menu {
+      color: var(--cor-titulo);
+      text-decoration: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .botao-menu:hover,
+    .botao-menu.ativo {
+      background-color: var(--cor-destaque);
+      color: #ffffff;
+    }
+
+    /* Estilo visual dos cartões de artigos */
+    .cartao-artigo {
+      background: #ffffff;
+      border: 1px solid #e6e9ec;
+      border-radius: 12px;
+      overflow: hidden;
+      height: 100%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Efeito CSS que levanta levemente o cartão quando passamos o mouse */
+    .cartao-artigo:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Padroniza o tamanho das fotos dos artigos sem distorcer a imagem */
+    .cartao-artigo img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    /* Etiqueta laranja suave que mostra o nome da categoria no cartão */
+    .etiqueta-categoria {
+      background-color: rgba(247, 88, 21, 0.12);
+      color: var(--cor-destaque);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    /* Botão laranja padrão do site */
+    .btn-laranja {
+      background-color: var(--cor-destaque);
+      color: #ffffff;
+      border: none;
+    }
+
+    .btn-laranja:hover {
+      background-color: #d8470a;
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================================
+       CABEÇALHO (<header>): Topo do site com Logo, Busca e Menu de Categorias
+       ========================================================================= -->
+  <header class="bg-white border-bottom shadow-sm">
+    <div class="container py-3 d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+      <!-- Nome do site que aponta para a página inicial '/' -->
+      <a href="/" class="logo-site">BlogPy<span>.</span></a>
+
+      <!-- FORMULÁRIO DE PESQUISA: Envia o texto digitado para o Python filtrar -->
+      <form action="/" method="GET" class="d-flex">
+        <div class="input-group">
+          <input
+            type="text"
+            name="busca"
+            value="{{ termo_busca }}"
+            class="form-control"
+            placeholder="Pesquisar artigo...">
+          <button type="submit" class="btn btn-laranja">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- MENU DE NAVEGAÇÃO (<nav>): Filtra os artigos por categoria usando Python -->
+    <nav class="bg-light border-top py-2">
+      <div class="container d-flex flex-wrap justify-content-center gap-2">
+        <a href="/?categoria=Todas" class="botao-menu {% if categoria_atual == 'Todas' %}ativo{% endif %}">
+          Todas
+        </a>
+        <a href="/?categoria=Python" class="botao-menu {% if categoria_atual == 'Python' %}ativo{% endif %}">
+          Python
+        </a>
+        <a href="/?categoria=Web Design" class="botao-menu {% if categoria_atual == 'Web Design' %}ativo{% endif %}">
+          Web Design
+        </a>
+        <a href="/?categoria=Iniciantes" class="botao-menu {% if categoria_atual == 'Iniciantes' %}ativo{% endif %}">
+          Iniciantes
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =========================================================================
+       CONTEÚDO PRINCIPAL (<main>): Área central do site
+       ========================================================================= -->
+  <main class="container my-5">
+
+    <!-- AVISO DE SUCESSO: Aparece quando o aluno envia um comentário novo -->
+    {% if aviso_sucesso %}
+    <div class="alert alert-success d-flex align-items-center mb-4">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      <span>{{ aviso_sucesso }}</span>
+    </div>
+    {% endif %}
+
+    <!-- AVISO DE ERRO 404: Aparece apenas se o usuário acessar uma rota inexistente -->
+    {% if erro_404 %}
+    <section class="p-5 mb-5 text-center bg-white border rounded-4 shadow-sm">
+      <h1 class="display-4 fw-bold text-danger">404</h1>
+      <h2 class="h4">Ops! Esta página não foi encontrada</h2>
+      <p class="text-muted">O endereço digitado não existe no servidor Python.</p>
+      <a href="/" class="btn btn-laranja mt-2">Voltar para o Início</a>
+    </section>
+    {% endif %}
+
+    <!-- =======================================================================
+         SEÇÃO 1: GRADE RESPONSIVA DE ARTIGOS COM IMAGENS
+         ======================================================================= -->
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h4 fw-bold mb-0">
+          Artigos Publicados ({{ postagens|length }})
+        </h2>
+
+        <!-- Se houver filtro ativo, mostra botão para limpar a pesquisa -->
+        {% if termo_busca or categoria_atual != 'Todas' %}
+        <a href="/" class="btn btn-outline-secondary btn-sm">Mostrar Tudo</a>
+        {% endif %}
+      </div>
+
+      <!-- SISTEMA DE GRID DO BOOTSTRAP:
+           - 'row g-4': Cria uma linha com espaçamento entre os cartões.
+           - 'col-md-4': Como o Bootstrap tem 12 colunas, 12 dividido por 4 = 3 cartões por linha no PC!
+                         No celular, ele empilha automaticamente 1 cartão embaixo do outro. -->
+      <div class="row g-4">
+        <!-- Laço 'for' do Python: cria um cartão HTML para cada artigo da lista -->
+        {% for post in postagens %}
+        <div class="col-md-4">
+          <article class="cartao-artigo d-flex flex-column">
+
+            <!-- Imagem do artigo com a classe 'img-fluid' para nunca vazar da tela -->
+            <img src="{{ post.imagem }}" alt="{{ post.titulo }}" class="img-fluid">
+
+            <div class="p-4 d-flex flex-column flex-grow-1">
+              <div class="mb-2">
+                <span class="etiqueta-categoria">{{ post.categoria }}</span>
+              </div>
+
+              <h3 class="h5 fw-bold">{{ post.titulo }}</h3>
+              <p class="text-muted small flex-grow-1">{{ post.resumo }}</p>
+
+              <!-- Rodapé do cartão com autor e data -->
+              <div class="border-top pt-3 mt-2 d-flex justify-content-between small text-muted">
+                <span><i class="bi bi-person me-1"></i>{{ post.autor }}</span>
+                <span><i class="bi bi-calendar3 me-1"></i>{{ post.data }}</span>
+              </div>
+            </div>
+
+          </article>
+        </div>
+        {% else %}
+        <!-- Mensagem exibida se a busca não encontrar nenhum artigo -->
+        <div class="col-12">
+          <div class="p-4 text-center bg-white border rounded-3">
+            <p class="mb-2">Nenhum artigo encontrado para sua pesquisa.</p>
+            <a href="/" class="btn btn-laranja btn-sm">Ver todos os artigos</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         SEÇÃO 2: MURAL DE COMENTÁRIOS E FORMULÁRIO INTERATIVO
+         ======================================================================= -->
+    <section class="bg-white p-4 rounded-4 border shadow-sm">
+      <div class="row g-4">
+
+        <!-- Coluna da Esquerda: Exibe os comentários salvos na lista do Python -->
+        <div class="col-md-6">
+          <h3 class="h5 fw-bold mb-3">
+            <i class="bi bi-chat-dots me-1"></i> Mural da Turma ({{ comentarios|length }})
+          </h3>
+
+          {% for item in comentarios %}
+          <div class="p-3 mb-2 bg-light border rounded-3">
+            <strong class="d-block text-dark">{{ item.nome }}</strong>
+            <span class="text-secondary small">{{ item.mensagem }}</span>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Coluna da Direita: Formulário que envia dados via POST para o Python -->
+        <div class="col-md-6">
+          <h3 class="h5 fw-bold mb-3">Deixe seu Comentário</h3>
+          <form action="/comentar" method="POST">
+            <div class="mb-3">
+              <label class="form-label small fw-bold">Seu Nome:</label>
+              <input type="text" name="nome" class="form-control" placeholder="Ex: João Pedro" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small fw-bold">Sua Mensagem:</label>
+              <textarea name="mensagem" rows="2" class="form-control" placeholder="Escreva seu comentário..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-laranja w-100">
+              <i class="bi bi-send me-1"></i> Publicar Comentário
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       RODAPÉ (<footer>): Encerramento da página e link para testar o erro 404
+       ========================================================================= -->
+  <footer class="bg-white border-top py-4 mt-5 text-center small text-muted">
+    <div class="container">
+      <p class="mb-1">
+        <strong>BlogPy</strong> — Template Didático (HTML5 + CSS3 + Bootstrap 5 + Python/Flask).
+      </p>
+      <p class="mb-0">
+        Quer testar a função de erro do Python? <a href="/pagina-que-nao-existe">Clique aqui para simular o Erro 404</a>.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
